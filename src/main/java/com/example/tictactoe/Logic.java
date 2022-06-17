@@ -4,10 +4,12 @@ public class Logic {
 
     private TurnLabel turnLabel;
     private char[][] area;
+    public boolean gameShouldEnd;
 
     public Logic(TurnLabel turnLabel){
-        area = new char [3][3];
+        this.area = new char [3][3];
         this.turnLabel = turnLabel;
+        this.gameShouldEnd = false;
     }
 
     public void addToArea (int x,int y){
@@ -39,34 +41,40 @@ public class Logic {
             }
         }
         if(count == 9){
-            turnLabel.endGame();
+            turnLabel.setLabelTie();
         }
     }
 
     public boolean win(){
-
         if(checkLeftToRight(Turn.O)){
-            turnLabel.endGame();
+            turnLabel.setLabelPlayerWon(Turn.O);
+            gameShouldEnd = true;
         }else if(checkLeftToRight(Turn.X)){
-            turnLabel.endGame();
+            turnLabel.setLabelPlayerWon(Turn.X);
+            gameShouldEnd = true;
         }else if(checkRightToLeft(Turn.O)){
-            turnLabel.endGame();
+            turnLabel.setLabelPlayerWon(Turn.O);
+            gameShouldEnd = true;
         }else if(checkRightToLeft(Turn.X)){
-            turnLabel.endGame();
+            turnLabel.setLabelPlayerWon(Turn.X);
+            gameShouldEnd = true;
         }else{
             for(int i =0;i <= 2;i++){
                 if(checkHorizontalLine(Turn.O,i)){
-                    turnLabel.endGame();
+                    turnLabel.setLabelPlayerWon(Turn.O);
+                    gameShouldEnd = true;
                 }else if(checkHorizontalLine(Turn.X,i)){
-                    turnLabel.endGame();
+                    turnLabel.setLabelPlayerWon(Turn.X);
+                    gameShouldEnd = true;
                 }else if(checkVerticalLine(Turn.O,i)){
-                    turnLabel.endGame();
+                    turnLabel.setLabelPlayerWon(Turn.O);
+                    gameShouldEnd = true;
                 }else if(checkVerticalLine(Turn.X,i)){
-                    turnLabel.endGame();
+                    turnLabel.setLabelPlayerWon(Turn.X);
+                    gameShouldEnd = true;
                 }
             }
         }
-
         return false;
     }
 

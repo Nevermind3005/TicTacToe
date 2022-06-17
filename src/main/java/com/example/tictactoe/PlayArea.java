@@ -2,6 +2,7 @@ package com.example.tictactoe;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -11,15 +12,16 @@ public class PlayArea {
 
     private TurnLabel turn;
     private Logic logic;
+    private GridPane layout;
 
     public PlayArea(TurnLabel turn,Logic logic){
         this.turn = turn;
         this.logic = logic;
+        layout = new GridPane();
+        initView();
     }
 
-    public Parent getView(){
-        GridPane layout = new GridPane();
-
+    private void initView() {
         layout.setAlignment(Pos.CENTER);
         layout.setVgap(10);
         layout.setHgap(10);
@@ -65,51 +67,75 @@ public class PlayArea {
         btnOne.setOnAction((event) ->{
             logic.addPlayerIfAbsent(0, 0);
             btnOne.setText(String.valueOf(logic.getPlayerAtPosition(0,0)));
-            //turn.changeAndSetTurn();
+            gameShouldEnd();
         });
 
         btnTwo.setOnAction((event) ->{
             logic.addPlayerIfAbsent(0, 1);
             btnTwo.setText(String.valueOf(logic.getPlayerAtPosition(0, 1)));
+            gameShouldEnd();
         });
 
         btnThree.setOnAction((event) ->{
             logic.addPlayerIfAbsent(0, 2);
             btnThree.setText(String.valueOf(logic.getPlayerAtPosition(0, 2)));
+            gameShouldEnd();
         });
 
         btnFour.setOnAction((event) ->{
             logic.addPlayerIfAbsent(1, 0);
             btnFour.setText(String.valueOf(logic.getPlayerAtPosition(1, 0)));
+            gameShouldEnd();
         });
 
         btnFive.setOnAction((event) ->{
             logic.addPlayerIfAbsent(1, 1);
             btnFive.setText(String.valueOf(logic.getPlayerAtPosition(1, 1)));
+            gameShouldEnd();
         });
 
         btnSix.setOnAction((event) ->{
             logic.addPlayerIfAbsent(1, 2);
             btnSix.setText(String.valueOf(logic.getPlayerAtPosition(1, 2)));
+            gameShouldEnd();
         });
 
         btnSeven.setOnAction((event) ->{
             logic.addPlayerIfAbsent(2, 0);
             btnSeven.setText(String.valueOf(logic.getPlayerAtPosition(2, 0)));
+            gameShouldEnd();
         });
 
         btnEight.setOnAction((event) ->{
             logic.addPlayerIfAbsent(2, 1);
             btnEight.setText(String.valueOf(logic.getPlayerAtPosition(2, 1)));
+            gameShouldEnd();
         });
 
         btnNine.setOnAction((event) ->{
             logic.addPlayerIfAbsent(2, 2);
             btnNine.setText(String.valueOf(logic.getPlayerAtPosition(2, 2)));
+            gameShouldEnd();
         });
 
+    }
 
+    public Parent getView(){
         return layout;
+    }
+
+    private void gameShouldEnd() {
+        if (logic.gameShouldEnd) {
+            disablePlayArea();
+        }
+    }
+
+    public void disablePlayArea() {
+        for (Node node:layout.getChildren()) {
+            if (node instanceof Button) {
+                node.setDisable(true);
+            }
+        }
     }
 
 }

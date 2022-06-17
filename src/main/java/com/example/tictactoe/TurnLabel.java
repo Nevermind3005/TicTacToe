@@ -46,8 +46,12 @@ public class TurnLabel {
         setTurnLabel();
     }
 
-    public void endGame(){
-        turnLabel.setText("The end!");
+    public void setLabelTie() {
+        turnLabel.setText("Tie!");
+    }
+
+    public void setLabelPlayerWon(Turn turn) {
+        turnLabel.setText(turn + " won!");
     }
 
 }
